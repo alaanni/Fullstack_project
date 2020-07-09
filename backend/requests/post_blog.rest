@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/orders/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFubmkiLCJpZCI6IjVmMDYwZTNjYmRiNGViNGIyODVlZjk1OSIsImlhdCI6MTU5NDIzNjQ3N30.y3u7FE8ZR4bUN34YGzy2abWKDLGkmD2Ncib9zg5gBJs
+
+{
+  
+}

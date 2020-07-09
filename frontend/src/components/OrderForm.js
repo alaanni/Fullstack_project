@@ -1,0 +1,74 @@
+import React, { useState } from 'react'
+import Select from 'react-select'
+
+const OrderForm = ({ 
+  customers, 
+  createOrder, 
+  user, 
+  show 
+  }) => {
+
+  const [customerName, setCustomerName] = useState('')
+  const [orderType, setOrderType] = useState('')
+  const [comment, setComment] = useState('')
+
+  let types = [{ name: 'nuohous', id: 1 }, 
+  { name: 'ilmastoinnin puhdistus', id: 2 },
+  { name: 'muu', id: 3 }]
+
+
+  if (!show) {
+    return null
+  }
+
+  const names = customers.map(c => { return { value: c.name, label: c.name } })
+
+  const ordertypes = types.map(t => { return { value: t.name, label: t.name } })
+
+  const addOrder = (event) => {
+    event.preventDefault()
+    createOrder({
+      customer: customerName,
+      user: user
+    })
+    setCustomerName('')
+    setOrderType('')
+    setComment('')
+  }
+
+  return(
+    <div className='formDiv'>
+      <h2>new order</h2>
+
+      <form onSubmit={addOrder}>
+        <div>
+          customer:
+          <Select 
+              value={customerName} 
+              onChange={(selectedName) => setCustomerName(selectedName)}
+              options={names}         
+            />
+        </div>
+        <div>
+          order type:
+          <Select 
+              value={orderType} 
+              onChange={(selectedType) => setOrderType(selectedType)}
+              options={ordertypes}         
+            />
+        </div>
+        <div>
+          comment:
+          <input
+            id='comment'
+            value={comment}
+            onChange={({ target }) => setComment(target.value)}
+          />
+        </div>
+        <button className='create-button' type="submit">create</button>
+      </form>
+    </div>
+  )
+}
+
+export default OrderForm

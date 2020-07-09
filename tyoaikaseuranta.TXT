@@ -1,0 +1,5 @@
+6.7.2020 Aloitus; suunnittelua. 2 h
+8.7.2020 Projektille otettu pohjaksi omat aikaisemmin 
+	 luomani blogilista sovelluksen front- ja backend. 
+	 Muokattu niitä aiheeseen sopiviksi. 3 h
+9.7.2020 Luotu toiminnallisuudet uuden asiakkaan lisäämiseen 3 h
