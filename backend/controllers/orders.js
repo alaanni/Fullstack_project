@@ -2,10 +2,13 @@ const jwt = require('jsonwebtoken')
 const ordersRouter = require('express').Router()
 const Order = require('../models/order')
 const User = require('../models/user')
+const Customer = require('../models/customer')
 
 ordersRouter.get('/', async (request, response) => {
   const orders = await Order
-  .find({}).populate('user', {username: 1, name: 1})
+  .find({})
+  .populate('user', { username: 1, name: 1 })
+  .populate('customer', { name: 1, id: 1})
   response.json(orders.map(order => order.toJSON()))
   })
   
@@ -15,7 +18,7 @@ ordersRouter.get('/:id', async (request, response) => {
     response.json(order.toJSON())
   } else {
     response.status(404).end()
-  }
+  } 
 })
 
 ordersRouter.post('/', async (request, response) => {
@@ -26,13 +29,16 @@ ordersRouter.post('/', async (request, response) => {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
    const user = await User.findById(decodedToken.id)
+   const ordersCustomer = await Customer.findOne(customer => customer.name === body.customer.value)
 
   const order = new Order({
-    user: user
+    user: user,
+    customer: ordersCustomer
   })
 
   const savedOrder = await order.save()
   user.orders = user.orders.concat(savedOrder._id)
+  customer.orders = customer.orders.concat(savedOrder._id)
   await order.save()
 
   response.json(savedOrder.toJSON())

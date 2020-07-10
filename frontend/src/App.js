@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import Order from './components/Order'
-import orderService from './services/orders'
-import customerService from './services/customers'
+import Customer from './components/Customer'
 import loginService from './services/login'
-import OrderForm from './components/OrderForm'
+import customerService from './services/customers'
+import orderService from './services/orders'
 import LoginForm from './components/LoginForm'
-import CustomerForm from './components/CustomerForm'
 import CustomerList from './components/CustomerList'
 import Notification from './components/Notification'
+import OrderList from './components/OrderList'
+import Home from './components/Home'
+import {
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useRouteMatch,
+  useHistory
+} from "react-router-dom"
+import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -17,7 +27,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
-  const [page, setPage] = useState('orders')
 
   const updateAll = () => {
     orderService.getAll().then(orders =>
@@ -73,33 +82,6 @@ const App = () => {
     setUser(null)
   }
 
-  const addOrder = (orderObject) => {
-    orderService
-      .create(orderObject)
-      .then(returnedOrder => {
-        setOrders(orders.concat(returnedOrder))
-        setMessage(
-          `Added new order from ${returnedOrder.customer}`
-        )
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
-      })
-  }
-  const addCustomer = (customerObject) => {
-    customerService
-      .create(customerObject)
-      .then(returnedCustomer => {
-        setCustomers(customers.concat(returnedCustomer))
-        setMessage(
-          `Added new customer ${returnedCustomer.name}`
-        )
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
-      })
-  }
-
   /*
   const giveLikes = (id) => {
     const blog = blogs.find(blog => blog.id === id)
@@ -136,59 +118,86 @@ const App = () => {
     }
   }
 
+  const matchOrder = useRouteMatch('/orders/:id')
+  const order = matchOrder 
+    ? orders.find(order => order.id === matchOrder.params.id)
+    : null
+
+  const matchCustomer = useRouteMatch('/customers/:id')
+  const customer = matchCustomer 
+    ? customers.find(customer => customer.id === matchCustomer.params.id)
+    : null
+
   return (
     <div className="container">
       <Notification message={message} error={error} />
 
-      {user === null ?
-        <LoginForm
-          username={username}
-          password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-        /> 
-        :
-        <div>
-          <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
-          
-          <div>
-          <button onClick={() => setPage('orders')}>home</button>
-          <button onClick={() => setPage('new order')}>new order</button>
-          <button onClick={() => setPage('customers')}>customers</button>
-          <button onClick={() => setPage('new customer')}>new customer</button>
-          </div>
+      <Navbar collapseOnSelect expand="lg" bg="light">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#" as="span">
+              <Link to="/">home</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link to="/orders">orders</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link to="/customers">customers</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              {user
+                ? <em>{user.name} logged in 
+                <button onClick={handleLogout}>logout</button></em>
+                : <Link to="/login">login</Link>
+              }
+          </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
-          <h2>orders</h2>
-          
-          {orders.map(order =>
-            <Order
-              key={order.id}
-              order={order}
-              removeOrder={removeOrder}
-              user={user}
+      <Switch>
+        <Route path="/orders/:id">
+          <Order 
+            order={order}
+            removeOrder={removeOrder}
+            user={user} 
             />
-          )}
-
-          <OrderForm 
-            show={page === 'new order'}
+        </Route>
+        <Route path="/orders">
+          {user ? <OrderList 
+            orders={orders}
             customers={customers}
-            createOrder={addOrder} 
             user={user}
             />
-
-          <CustomerForm
-            show={page === 'new customer'}
-            createCustomer={addCustomer}
+            : <Redirect to="/login" />}
+        </Route>
+        <Route path="/customers/:id">
+          <Customer 
+            customer={customer}
             />
-
-          <CustomerList 
-            show={page === 'customers'}
+        </Route>
+        <Route path="/customers">
+          {user ? <CustomerList
             customers={customers}
+            setCustomers={setCustomers}
+            setMessage={setMessage}
             />
-
-        </div>
-      }
+            : <Redirect to="/login" />}
+        </Route>
+        <Route path="/login">
+          <LoginForm
+            username={username}
+            password={password}
+            setUsername={setUsername}
+            setPassword={setPassword}
+            handleLogin={handleLogin} 
+            />
+        </Route>
+        <Route path="/">
+          {user ? <Home /> : <Redirect to="/login" />}
+        </Route>
+      </Switch>
     </div>
   )
 }

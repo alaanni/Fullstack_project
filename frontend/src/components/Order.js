@@ -25,7 +25,7 @@ const Order = ({
     <div style={orderStyle} className='order'>
       {viewAll ?
         <div>
-          {order.id} {order.customer} {order.status} <button onClick={() => setViewAll(false)}>hide</button><br></br>
+          {order.id} {order.customer.name} {order.status} <button onClick={() => setViewAll(false)}>hide</button><br></br>
           {order.orderLines}<br></br>
           {order.user.name}<br></br>
 
@@ -34,7 +34,7 @@ const Order = ({
             null}
         </div>:
         <div>
-          {order.id} {order.customer} {order.status} <button className='view' onClick={() => setViewAll(true)}>view</button>
+          {order.id} {order.customer.name} {order.status} <button className='view' onClick={() => setViewAll(true)}>view</button>
         </div>
       }
     </div>

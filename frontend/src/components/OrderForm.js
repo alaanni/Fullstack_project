@@ -57,15 +57,15 @@ const OrderForm = ({
               options={ordertypes}         
             />
         </div>
+        <div>comment:</div>
         <div>
-          comment:
           <input
             id='comment'
             value={comment}
             onChange={({ target }) => setComment(target.value)}
           />
         </div>
-        <button className='create-button' type="submit">create</button>
+        <button className='create-button' type="submit">add new order</button>
       </form>
     </div>
   )

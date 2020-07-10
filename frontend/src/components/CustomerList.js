@@ -1,32 +1,57 @@
-import React from 'react'
-import { Table, Link } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import CustomerForm from '../components/CustomerForm'
+import customerService from '../services/customers'
 
-const CustomerList = (props) => {
+const CustomerList = ({ customers, setCustomers, setMessage }) => {
+    const [page, setPage] = useState('')
 
-    if (!props.show) {
-        return null
-      }
+    const addCustomer = (customerObject) => {
+        customerService
+          .create(customerObject)
+          .then(returnedCustomer => {
+            setCustomers(customers.concat(returnedCustomer))
+            setMessage(
+              `Added new customer ${returnedCustomer.name}`
+            )
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
+          })
+          setPage('')
+    }
 
-    return (
-    <div>
-      <h2>Customers</h2>
-      <Table striped>
-        <tbody>
-          {props.customers.map(customer =>
-            <tr key={customer.id}>
-              <td>
+    return (       
+        <div>
+            {page === '' ? 
+            <button onClick={() => setPage('new customer')}>add new customer</button>
+            : <button onClick={() => setPage('')}>cancel</button>
+            }
+        
+            <CustomerForm
+                show={page === 'new customer'}
+                createCustomer={addCustomer}
+            />
 
-                  {customer.name}
-
-              </td>
-              <td>
-                {customer.postalCode}
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-    </div>
+            <h2>customers</h2>
+            <Table striped>
+                <tbody>
+                {customers.map(customer =>
+                <tr key={customer.id}>
+                <td>
+                <Link to={`/customers/${customer.id}`}>
+                    {customer.name}
+                </Link>
+                </td>
+                <td>
+                    {customer.postalCode}
+                </td>
+                </tr>
+                )}
+                </tbody>
+            </Table>
+        </div>
     )
 }
 
