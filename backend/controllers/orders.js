@@ -8,7 +8,7 @@ ordersRouter.get('/', async (request, response) => {
   const orders = await Order
   .find({})
   .populate('user', { username: 1, name: 1 })
-  .populate('customer', { name: 1, id: 1})
+  .populate('customer', { name: 1 })
   response.json(orders.map(order => order.toJSON()))
   })
   
@@ -29,7 +29,7 @@ ordersRouter.post('/', async (request, response) => {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
    const user = await User.findById(decodedToken.id)
-   const ordersCustomer = await Customer.findOne(customer => customer.name === body.customer.value)
+   const ordersCustomer = await Customer.findOne({ name: body.customer.value })
 
   const order = new Order({
     user: user,
@@ -38,7 +38,8 @@ ordersRouter.post('/', async (request, response) => {
 
   const savedOrder = await order.save()
   user.orders = user.orders.concat(savedOrder._id)
-  customer.orders = customer.orders.concat(savedOrder._id)
+  ordersCustomer.orders = ordersCustomer.orders.concat(savedOrder._id)
+
   await order.save()
 
   response.json(savedOrder.toJSON())

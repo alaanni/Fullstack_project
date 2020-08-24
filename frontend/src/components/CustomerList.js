@@ -2,24 +2,18 @@ import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import CustomerForm from '../components/CustomerForm'
-import customerService from '../services/customers'
+import { useDispatch } from 'react-redux'
+import { createCustomer } from '../reducers/customerReducer'
+import { newNotification } from '../reducers/notificationReducer'
 
-const CustomerList = ({ customers, setCustomers, setMessage }) => {
+const CustomerList = ({ customers }) => {
     const [page, setPage] = useState('')
+    const dispatch = useDispatch()
 
     const addCustomer = (customerObject) => {
-        customerService
-          .create(customerObject)
-          .then(returnedCustomer => {
-            setCustomers(customers.concat(returnedCustomer))
-            setMessage(
-              `Added new customer ${returnedCustomer.name}`
-            )
-            setTimeout(() => {
-              setMessage(null)
-            }, 5000)
-          })
-          setPage('')
+        dispatch(createCustomer(customerObject))
+        dispatch(newNotification(`Added new customer ${customerObject.name}`))
+        setPage('')
     }
 
     return (       

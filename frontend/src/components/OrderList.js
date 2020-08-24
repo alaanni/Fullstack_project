@@ -2,29 +2,22 @@ import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import OrderForm from '../components/OrderForm'
-import orderService from '../services/orders'
+import { newNotification } from '../reducers/notificationReducer'
+import { createOrder } from '../reducers/orderReducer'
+import { useDispatch } from 'react-redux'
 
 const OrderList = ({ 
     orders, 
-    setOrders, 
-    setMessage, 
     customers, 
     user 
     }) => {
     const [page, setPage] = useState('')
 
+    const dispatch = useDispatch()
+
     const addOrder = (orderObject) => {
-        orderService
-          .create(orderObject)
-          .then(returnedOrder => {
-            setOrders(orders.concat(returnedOrder))
-            setMessage(
-              `Added new order from ${returnedOrder.customer}`
-            )
-            setTimeout(() => {
-              setMessage(null)
-            }, 5000)
-        })
+        dispatch(createOrder(orderObject))
+        dispatch(newNotification(`Added new order from ${orderObject.customer.name}`))
         setPage('')
     }
     

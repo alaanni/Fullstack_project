@@ -26,11 +26,11 @@ const update = async order => {
   return response.data
 }
 
-const remove = async order => {
+const remove = async id => {
   const config = {
     headers: { Authorization: token }
   }
-  const response = await axios.delete(`${baseUrl}/${order.id}`, config)
+  const response = await axios.delete(`${baseUrl}/${id}`, config)
   return response.data
 }
 

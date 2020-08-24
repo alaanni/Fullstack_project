@@ -5,3 +5,6 @@
 9.7.2020 Luotu toiminnallisuudet uuden asiakkaan lisäämiseen 3 h
 9.7.2020 Uuden asiakkaan ja tilausten yhdistäminen 1 h
 10.7.2020 Routerit 5 h
+14.7.2020 Routerit, useHistory, bugien korjausta 2 h
+21.8.2020 Otettu käyttöön Redux. 3 h
+24.8.2020 Tilanhallintaa 1 h

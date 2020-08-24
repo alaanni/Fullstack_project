@@ -1,12 +1,11 @@
 //const jwt = require('jsonwebtoken')
 const customersRouter = require('express').Router()
 const Customer = require('../models/customer')
-const customer = require('../models/customer')
 //const User = require('../models/user')
 
 customersRouter.get('/', async (request, response) => {
   const customers = await Customer
-  .find({}).populate('orders', { id: 1 })
+  .find({}).populate('orders')
   response.json(customers.map(customer => customer.toJSON()))
   })
   

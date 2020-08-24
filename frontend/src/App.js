@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Order from './components/Order'
 import Customer from './components/Customer'
 import loginService from './services/login'
-import customerService from './services/customers'
 import orderService from './services/orders'
 import LoginForm from './components/LoginForm'
 import CustomerList from './components/CustomerList'
@@ -18,30 +17,27 @@ import {
   useHistory
 } from "react-router-dom"
 import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { initCustomers } from './reducers/customerReducer'
+import { newNotification } from './reducers/notificationReducer'
+import { initOrders, deleteOrder } from './reducers/orderReducer'
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [orders, setOrders] = useState([])
-  const [customers, setCustomers] = useState([])
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
 
-  const updateAll = () => {
-    orderService.getAll().then(orders =>
-      setOrders(orders)
-    )
-    customerService.getAll().then(customers =>
-      setCustomers(customers)
-    )
-  }
-
+  const dispatch = useDispatch()
+  
   useEffect(() => {
-    updateAll()
-  }, [])
+    dispatch(initCustomers())
+    dispatch(initOrders())
+  }, [dispatch])
 
-  // sort orders by status and/or date
+  const customers = useSelector(state => state.customers)
+  const orders = useSelector(state => state.orders)
+  const message = useSelector(state => state.message)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -51,6 +47,8 @@ const App = () => {
       orderService.setToken(user.token)
     }
   }, [])
+
+  const history = useHistory()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -69,12 +67,9 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setError(true)
-      setMessage('wrong credentials')
-      setTimeout(() => {
-        setMessage(null)
-        setError(false)
-      }, 5000)
+      dispatch(newNotification('wrong credentials'))
     }
+    history.push("/home")
   }
 
   const handleLogout = () => {
@@ -82,40 +77,18 @@ const App = () => {
     setUser(null)
   }
 
-  /*
-  const giveLikes = (id) => {
-    const blog = blogs.find(blog => blog.id === id)
-    const likedBlog = { ...blog, likes: blog.likes + 1 }
-
-    blogService
-      .update(likedBlog)
-      .then(returnedBlog => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : likedBlog))
-      })
-      .catch(error)
-  }
-  */
-
   const removeOrder = (id) => {
     const order = orders.find(order => order.id === id)
-    if (window.confirm(`Removing order from ${order.customer}`)) {
-      orderService
-        .remove(order)
-        .catch(error => {
+    if (window.confirm(`Removing order from ${order.customer.name}`)) {
+      dispatch(deleteOrder(id))
+        .catch(() => {
           setError(true)
-          setMessage(`Order ${order.id} from ${order.customer} was already deleted from server`)
+          dispatch(newNotification(`Order ${order.id} from ${order.customer.name} was already deleted from server`))
         })
       setError(false)
-      setMessage(
-        `Deleted order ${order.id} from ${order.customer}`
-      )
-      setTimeout(() => {
-        setMessage(null)
-      }, 4000)
-
-      setOrders(orders.filter(order =>
-        order.id !== id))
+      dispatch(newNotification(`Deleted order ${order.id} from ${order.customer.name}`))
     }
+    history.push("/orders")
   }
 
   const matchOrder = useRouteMatch('/orders/:id')
@@ -180,8 +153,6 @@ const App = () => {
         <Route path="/customers">
           {user ? <CustomerList
             customers={customers}
-            setCustomers={setCustomers}
-            setMessage={setMessage}
             />
             : <Redirect to="/login" />}
         </Route>
