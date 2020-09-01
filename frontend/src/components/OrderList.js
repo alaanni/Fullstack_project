@@ -4,24 +4,21 @@ import { Link } from 'react-router-dom'
 import OrderForm from '../components/OrderForm'
 import { newNotification } from '../reducers/notificationReducer'
 import { createOrder } from '../reducers/orderReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const OrderList = ({ 
-    orders, 
-    customers, 
     user 
     }) => {
     const [page, setPage] = useState('')
+    const orders = useSelector(state => state.orders)
 
     const dispatch = useDispatch()
 
     const addOrder = (orderObject) => {
         dispatch(createOrder(orderObject))
-        dispatch(newNotification(`Added new order from ${orderObject.customer.name}`))
+        dispatch(newNotification(`Added new order from ${orderObject.customer.name}`, 5))
         setPage('')
     }
-    
-    console.log('orders:', orders)
     
     return (
     <div>
@@ -31,7 +28,6 @@ const OrderList = ({
         }
         <OrderForm 
             show={page === 'new order'}
-            customers={customers}
             createOrder={addOrder} 
             user={user}
         />

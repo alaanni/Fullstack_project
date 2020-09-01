@@ -16,11 +16,12 @@ import {
   useRouteMatch,
   useHistory
 } from "react-router-dom"
-import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { initCustomers } from './reducers/customerReducer'
 import { newNotification } from './reducers/notificationReducer'
 import { initOrders, deleteOrder } from './reducers/orderReducer'
+
 
 const App = () => {
   const [username, setUsername] = useState('')
@@ -29,15 +30,15 @@ const App = () => {
   const [error, setError] = useState(false)
 
   const dispatch = useDispatch()
+  const history = useHistory()
+  const message = useSelector(state => state.message)
+  const orders = useSelector(state => state.orders)
+  const customers = useSelector(state => state.customers)
   
   useEffect(() => {
     dispatch(initCustomers())
     dispatch(initOrders())
   }, [dispatch])
-
-  const customers = useSelector(state => state.customers)
-  const orders = useSelector(state => state.orders)
-  const message = useSelector(state => state.message)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -48,7 +49,6 @@ const App = () => {
     }
   }, [])
 
-  const history = useHistory()
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -67,7 +67,7 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setError(true)
-      dispatch(newNotification('wrong credentials'))
+      dispatch(newNotification('wrong credentials', 5))
     }
     history.push("/home")
   }
@@ -83,10 +83,10 @@ const App = () => {
       dispatch(deleteOrder(id))
         .catch(() => {
           setError(true)
-          dispatch(newNotification(`Order ${order.id} from ${order.customer.name} was already deleted from server`))
+          dispatch(newNotification(`Order ${order.id} from ${order.customer.name} was already deleted from server`, 5))
         })
       setError(false)
-      dispatch(newNotification(`Deleted order ${order.id} from ${order.customer.name}`))
+      dispatch(newNotification(`Deleted order ${order.id} from ${order.customer.name}`, 5))
     }
     history.push("/orders")
   }
@@ -110,19 +110,19 @@ const App = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#" as="span">
-              <Link to="/">home</Link>
+              {user ? <Link to="/">home</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
-              <Link to="/orders">orders</Link>
+              {user ? <Link to="/orders">orders</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
-              <Link to="/customers">customers</Link>
+              {user ? <Link to="/customers">customers</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
               {user
                 ? <em>{user.name} logged in 
                 <button onClick={handleLogout}>logout</button></em>
-                : <Link to="/login">login</Link>
+                : <Link to="/login"></Link>
               }
           </Nav.Link>
           </Nav>
@@ -133,14 +133,12 @@ const App = () => {
         <Route path="/orders/:id">
           <Order 
             order={order}
+            user={user}
             removeOrder={removeOrder}
-            user={user} 
             />
         </Route>
         <Route path="/orders">
           {user ? <OrderList 
-            orders={orders}
-            customers={customers}
             user={user}
             />
             : <Redirect to="/login" />}
@@ -151,9 +149,7 @@ const App = () => {
             />
         </Route>
         <Route path="/customers">
-          {user ? <CustomerList
-            customers={customers}
-            />
+          {user ? <CustomerList />
             : <Redirect to="/login" />}
         </Route>
         <Route path="/login">

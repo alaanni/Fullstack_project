@@ -8,3 +8,4 @@
 14.7.2020 Routerit, useHistory, bugien korjausta 2 h
 21.8.2020 Otettu käyttöön Redux. 3 h
 24.8.2020 Tilanhallintaa 1 h
+28.8.2020 Routejen korjailua 2 h

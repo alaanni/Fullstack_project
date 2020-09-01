@@ -15,7 +15,7 @@ const reducer = (state = [], action) => {
   }
 }
 
-export const initCustomers = (customers) => {
+export const initCustomers = () => {
   return async dispatch => {
     const customers = await customerService.getAll()
     dispatch({

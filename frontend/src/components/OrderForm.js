@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
+import { useSelector } from 'react-redux'
 
 const OrderForm = ({ 
-  customers, 
   createOrder, 
   user, 
   show 
@@ -11,6 +11,7 @@ const OrderForm = ({
   const [customerName, setCustomerName] = useState('')
   const [orderType, setOrderType] = useState('')
   const [comment, setComment] = useState('')
+  const customers = useSelector(state => state.customers)
 
   let types = [{ name: 'nuohous', id: 1 }, 
   { name: 'ilmastoinnin puhdistus', id: 2 },

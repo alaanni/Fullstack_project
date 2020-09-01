@@ -28,10 +28,8 @@ const Order = ({
           {order.id} {order.customer.name} {order.status} <button onClick={() => setViewAll(false)}>hide</button><br></br>
           {order.orderLines}<br></br>
           {order.user.name}<br></br>
-
-          {order.user.username === user.username ?
-            <button id='remove' onClick={handleRemove}>remove</button> :
-            null}
+          
+          <button id='remove' onClick={handleRemove}>remove</button>
         </div>:
         <div>
           {order.id} {order.customer.name} {order.status} <button className='view' onClick={() => setViewAll(true)}>view</button>
