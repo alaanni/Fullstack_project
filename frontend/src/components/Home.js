@@ -2,8 +2,10 @@ import React from 'react'
 
 const Home = () => (
     <div> 
-      <h2>Fullstack app homepage</h2> 
-      <p></p> 
+      <h2>Homepage</h2> 
+
+      <p>calendar</p> 
+      <p>map</p>
     </div>
   )
 

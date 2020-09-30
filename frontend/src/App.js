@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Order from './components/Order'
-import Customer from './components/Customer'
+import Order from './Order/Order'
+import Customer from './Customer/Customer'
 import loginService from './services/login'
 import orderService from './services/orders'
 import LoginForm from './components/LoginForm'
-import CustomerList from './components/CustomerList'
+import CustomerList from './Customer/CustomerList'
 import Notification from './components/Notification'
-import OrderList from './components/OrderList'
+import OrderList from './Order/OrderList'
 import Home from './components/Home'
 import {
   Switch,
@@ -31,6 +31,7 @@ const App = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
+
   const message = useSelector(state => state.message)
   const orders = useSelector(state => state.orders)
   const customers = useSelector(state => state.customers)
@@ -153,13 +154,14 @@ const App = () => {
             : <Redirect to="/login" />}
         </Route>
         <Route path="/login">
+          {!user ? 
           <LoginForm
             username={username}
             password={password}
             setUsername={setUsername}
             setPassword={setPassword}
             handleLogin={handleLogin} 
-            />
+            /> : <Redirect to="/home" />}
         </Route>
         <Route path="/">
           {user ? <Home /> : <Redirect to="/login" />}

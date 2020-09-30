@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import OrderForm from '../components/OrderForm'
+import OrderForm from './OrderForm'
 import { newNotification } from '../reducers/notificationReducer'
 import { createOrder } from '../reducers/orderReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const OrderList = ({ 
     user 
@@ -13,11 +14,13 @@ const OrderList = ({
     const orders = useSelector(state => state.orders)
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const addOrder = (orderObject) => {
         dispatch(createOrder(orderObject))
-        dispatch(newNotification(`Added new order from ${orderObject.customer.name}`, 5))
+        dispatch(newNotification(`Added new order`, 5))
         setPage('')
+        history.push("/orders")
     }
     
     return (

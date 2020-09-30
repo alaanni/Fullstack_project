@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import CustomerForm from '../components/CustomerForm'
+import CustomerForm from './CustomerForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCustomer } from '../reducers/customerReducer'
 import { newNotification } from '../reducers/notificationReducer'
