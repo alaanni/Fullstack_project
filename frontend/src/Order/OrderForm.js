@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
+import { initOrderLines } from '../reducers/orderLineReducer'
 
 const OrderForm = ({ 
   createOrder, 
@@ -12,8 +13,13 @@ const OrderForm = ({
 
   const [customerName, setCustomerName] = useState('')
   const [comment, setComment] = useState('')
+  const [ordersProduct, setOrdersProduct] = useState('')
   const customers = useSelector(state => state.customers)
   const orderLines = useSelector(state => state.orderLines)
+
+  useEffect(() => {
+    dispatch(initOrderLines())
+  }, [dispatch])
 
   if (!show) {
     return null
@@ -27,11 +33,12 @@ const OrderForm = ({
     event.preventDefault()
     createOrder({
       customer: customerName,
-      orderLines : orderLines,
-      user: user
+      orderLine : ordersProduct,
+      user: user,
+      comment: comment
     })
     setCustomerName('')
-    setOrderType('')
+    setOrdersProduct('')
     setComment('')
   }
 
@@ -49,10 +56,10 @@ const OrderForm = ({
             />
         </div>
         <div>
-          order type:
+          product:
           <Select 
-              value={orderType} 
-              onChange={(selectedType) => setOrderType(selectedType)}
+              value={ordersProduct} 
+              onChange={(selectedType) => setOrdersProduct(selectedType)}
               options={ordertypes}         
             />
         </div>

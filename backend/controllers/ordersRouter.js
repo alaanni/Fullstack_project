@@ -3,12 +3,14 @@ const ordersRouter = require('express').Router()
 const Order = require('../models/orderSchema')
 const User = require('../models/userSchema')
 const Customer = require('../models/customerSchema')
+const OrderLine = require('../models/orderLineSchema')
 
 ordersRouter.get('/', async (request, response) => {
   const orders = await Order
   .find({})
   .populate('user', { username: 1, name: 1 })
   .populate('customer', { name: 1 })
+  .populate('orderLine', { product: 1 })
   response.json(orders.map(order => order.toJSON()))
   })
   
@@ -30,17 +32,20 @@ ordersRouter.post('/', async (request, response) => {
   }
    const user = await User.findById(decodedToken.id)
    const ordersCustomer = await Customer.findOne({ name: body.customer.value })
+   const ordersProduct = await OrderLine.findOne({ product: body.orderLine.value})
 
   const order = new Order({
     user: user,
-    customer: ordersCustomer
+    customer: ordersCustomer,
+    orderLine: ordersProduct,
+    comment: body.comment
   })
 
   const savedOrder = await order.save()
-  user.orders = user.orders.concat(savedOrder._id)
-  ordersCustomer.orders = ordersCustomer.orders.concat(savedOrder._id)
+  user.orders = user.orders.concat(savedOrder.id)
+  ordersCustomer.orders = ordersCustomer.orders.concat(savedOrder.id)
 
-  await order.save()
+  await ordersCustomer.save()
 
   response.json(savedOrder.toJSON())
 })

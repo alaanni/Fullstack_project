@@ -1,20 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const Order = ({
-  order,
-  removeOrder,
-  user
-}) => {
-  const [viewAll, setViewAll] = useState(false)
-
-  const orderStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    borderRadius: 3,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+const Order = ({ order, removeOrder }) => {
 
   const handleRemove = (event) => {
     event.preventDefault()
@@ -22,19 +8,14 @@ const Order = ({
   }
 
   return (
-    <div style={orderStyle} className='order'>
-      {viewAll ?
-        <div>
-          {order.id} {order.customer.name} {order.status} <button onClick={() => setViewAll(false)}>hide</button><br></br>
-          {order.orderLines}<br></br>
-          {order.user.name}<br></br>
-          
-          <button id='remove' onClick={handleRemove}>remove</button>
-        </div>:
-        <div>
-          {order.id} {order.customer.name} {order.status} <button className='view' onClick={() => setViewAll(true)}>view</button>
-        </div>
-      }
+    <div className='order'>
+      <h2>Orders information</h2>
+      <div>
+        <p>order type: {order.orderLine.product}</p>
+        <p>customer: {order.customer.name}</p>
+        <p>comments: {order.comment}</p>
+      </div>
+      <button id='remove' onClick={handleRemove}>remove</button>
     </div>
   )}
 

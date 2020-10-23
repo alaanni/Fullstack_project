@@ -42,7 +42,7 @@ const OrderList = ({
             <tr key={order.id}>
                 <td>
                     <Link to={`/orders/${order.id}`}>
-                    {order.id}
+                    {order.orderLine.product}
                     </Link>
                 </td>
                 <td>

@@ -9,4 +9,5 @@
 24.8.2020 Tilanhallintaa 1 h
 28.8.2020 Routejen korjailua 2 h
 30.9.2020 Hienosäätöä 1 h
-23.10.2020 Lisätty orderline komponentti backendiin
+23.10.2020 Lisätty orderline komponentti backendiin 4 h
+23.10.2020 Luotu pohjat kartta ja kalenteri komponenteille 1 h

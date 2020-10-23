@@ -134,7 +134,6 @@ const App = () => {
         <Route path="/orders/:id">
           <Order 
             order={order}
-            user={user}
             removeOrder={removeOrder}
             />
         </Route>
