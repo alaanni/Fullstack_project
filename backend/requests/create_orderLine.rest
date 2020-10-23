@@ -1,0 +1,12 @@
+POST http://localhost:3003/api/orderLines/
+Content-Type: application/json
+
+{
+  "product": "Nuohous",
+  "quantity": 1,
+  "priceExclTax": 56.89,
+  "priceInclTax": 106.56,
+  "taxRate": 24,
+  "discount": 0,
+  "description": "Takan nuohous"
+}

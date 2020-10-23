@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const ordersRouter = require('express').Router()
-const Order = require('../models/order')
-const User = require('../models/user')
-const Customer = require('../models/customer')
+const Order = require('../models/orderSchema')
+const User = require('../models/userSchema')
+const Customer = require('../models/customerSchema')
 
 ordersRouter.get('/', async (request, response) => {
   const orders = await Order

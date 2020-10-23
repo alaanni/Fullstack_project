@@ -1,24 +1,22 @@
-
 const config = require('./utils/config')
 const express = require('express')
 require('express-async-errors')
 const app = express()
 
-const orderRouter = require('./controllers/orders')
-const usersRouter = require('./controllers/users')
-const loginRouter = require('./controllers/login')
-const customersRouter = require('./controllers/customers')
+const ordersRouter = require('./controllers/ordersRouter')
+const usersRouter = require('./controllers/usersRouter')
+const loginRouter = require('./controllers/loginRouter')
+const customersRouter = require('./controllers/customersRouter')
+const orderLinesRouter = require('./controllers/orderLinesRouter')
 
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const cors = require('cors')
 const mongoose = require('mongoose')
-mongoose.set('useCreateIndex', true)
-mongoose.set('useFindAndModify', false)
 
 logger.info('connecting to', config.MONGODB_URI)
   
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true,  useFindAndModify: false, useCreateIndex: true })
     .then(() => {
         logger.info('connected to MongoDB')
     })
@@ -32,10 +30,11 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
-app.use('/api/orders', orderRouter)
+app.use('/api/orders', ordersRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/customers', customersRouter)
+app.use('/api/orderLines', orderLinesRouter)
 
 if (process.env.NODE_ENV === 'test') {
     const testingRouter = require('./controllers/testing')

@@ -1,11 +1,10 @@
-//const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const customersRouter = require('express').Router()
-const Customer = require('../models/customer')
-//const User = require('../models/user')
+const Customer = require('../models/customerSchema')
+const User = require('../models/userSchema')
 
 customersRouter.get('/', async (request, response) => {
-  const customers = await Customer
-  .find({}).populate('orders')
+  const customers = await Customer.find({}).populate('orders', { orderLine: 1 })
   response.json(customers.map(customer => customer.toJSON()))
   })
   
@@ -21,11 +20,11 @@ customersRouter.get('/:id', async (request, response) => {
 customersRouter.post('/', async (request, response) => {
   const body = request.body
 
-  /*const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-   const user = await User.findById(decodedToken.id) */
+  const user = await User.findById(decodedToken.id)
 
   const customer = new Customer({
       name: body.name,
@@ -61,15 +60,15 @@ customersRouter.delete('/:id', async(request, response) => {
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-   //const user = await User.findById(decodedToken.id)
+   const user = await User.findById(decodedToken.id)
    const customer = await Customer.findById(request.params.id)
 
-   //if ( order.user.toString() === user._id.toString() ) {   }
+   if ( order.user.toString() === user._id.toString() ) {   }
     
    await Order.findByIdAndRemove(request.params.id)
    response.status(204).end()
 
-  //response.status(401).end()
+  response.status(401).end()
 })
 
 module.exports = customersRouter

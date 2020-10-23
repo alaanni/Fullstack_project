@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const usersRouter = require('express').Router()
-const User = require('../models/user')
+const User = require('../models/userSchema')
 
 usersRouter.post('/', async (request, response) => {
   const body = request.body
@@ -26,7 +26,7 @@ usersRouter.post('/', async (request, response) => {
 
 usersRouter.get('/', async (request, response) => {
     const users = await User
-    .find({}).populate('orders')
+    .find({}).populate('orders', { id: 1 })
     response.json(users.map(u => u.toJSON()))
   })
 

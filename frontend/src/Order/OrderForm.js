@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Select from 'react-select'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const OrderForm = ({ 
   createOrder, 
@@ -8,15 +8,12 @@ const OrderForm = ({
   show 
   }) => {
 
+  const dispatch = useDispatch()
+
   const [customerName, setCustomerName] = useState('')
-  const [orderType, setOrderType] = useState('')
   const [comment, setComment] = useState('')
   const customers = useSelector(state => state.customers)
-
-  let types = [{ name: 'nuohous', id: 1 }, 
-  { name: 'ilmastoinnin puhdistus', id: 2 },
-  { name: 'muu', id: 3 }]
-
+  const orderLines = useSelector(state => state.orderLines)
 
   if (!show) {
     return null
@@ -24,12 +21,13 @@ const OrderForm = ({
 
   const names = customers.map(c => { return { value: c.name, label: c.name } })
 
-  const ordertypes = types.map(t => { return { value: t.name, label: t.name } })
+  const ordertypes = orderLines.map(t => { return { value: t.product, label: t.product } })
 
   const addOrder = (event) => {
     event.preventDefault()
     createOrder({
       customer: customerName,
+      orderLines : orderLines,
       user: user
     })
     setCustomerName('')
