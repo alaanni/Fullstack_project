@@ -8,6 +8,7 @@ const usersRouter = require('./controllers/usersRouter')
 const loginRouter = require('./controllers/loginRouter')
 const customersRouter = require('./controllers/customersRouter')
 const orderLinesRouter = require('./controllers/orderLinesRouter')
+const buildingsRouter = require('./controllers/buildingsRouter')
 
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
@@ -35,6 +36,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/customers', customersRouter)
 app.use('/api/orderLines', orderLinesRouter)
+app.use('/api/buildings', buildingsRouter)
 
 if (process.env.NODE_ENV === 'test') {
     const testingRouter = require('./controllers/testing')

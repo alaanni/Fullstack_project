@@ -1,4 +1,4 @@
-import customerService from '../services/customers'
+import customerService from '../services/customerService'
 
 const reducer = (state = [], action) => {
 

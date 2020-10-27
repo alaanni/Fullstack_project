@@ -11,6 +11,7 @@ ordersRouter.get('/', async (request, response) => {
   .populate('user', { username: 1, name: 1 })
   .populate('customer', { name: 1 })
   .populate('orderLine', { product: 1 })
+  .populate('building', { type: 1 })
   response.json(orders.map(order => order.toJSON()))
   })
   

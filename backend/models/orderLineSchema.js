@@ -6,8 +6,7 @@ const orderLineSchema = new mongoose.Schema({
         required: true
     },
     quantity: {
-        type: Number,
-        required: true
+        type: Number
     },
     priceExclTax: {
         type: mongoose.Schema.Types.Decimal128

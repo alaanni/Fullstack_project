@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import CustomerForm from './CustomerForm'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,8 +21,8 @@ const CustomerList = () => {
     return (       
         <div>
             {page === '' ? 
-            <button onClick={() => setPage('new customer')}>add new customer</button>
-            : <button onClick={() => setPage('')}>cancel</button>
+            <Button variant='primary' onClick={() => setPage('new customer')}>Add new customer</Button>
+            : <Button variant='secondary' onClick={() => setPage('')}>cancel</Button>
             }
         
             <CustomerForm
@@ -30,7 +30,7 @@ const CustomerList = () => {
                 createCustomer={addCustomer}
             />
 
-            <h2>customers</h2>
+            <h2>Customers</h2>
             <Table striped>
                 <tbody>
                 {customers.map(customer =>

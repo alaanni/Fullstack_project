@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/buildings/
+Content-Type: application/json
+
+{
+  "type": "Vapaa-ajan asunto",
+  "street": "Mökkitie 5",
+  "city": "Mökkikylä",
+  "postalCode": "00002",
+  "comment": "Lisätiedot tähän"
+}

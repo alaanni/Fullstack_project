@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Order from './Order/Order'
-import Customer from './Customer/Customer'
-import loginService from './services/login'
-import orderService from './services/orders'
-import LoginForm from './components/LoginForm'
-import CustomerList from './Customer/CustomerList'
-import Notification from './components/Notification'
 import OrderList from './Order/OrderList'
+import Customer from './Customer/Customer'
+import CustomerList from './Customer/CustomerList'
+import loginService from './services/loginService'
+import orderService from './services/orderService'
+import LoginForm from './components/LoginForm'
 import Home from './components/Home'
+import Notification from './components/Notification'
 import {
   Switch,
   Route,
@@ -16,11 +16,11 @@ import {
   useRouteMatch,
   useHistory
 } from "react-router-dom"
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { initCustomers } from './reducers/customerReducer'
 import { newNotification } from './reducers/notificationReducer'
-import { initOrders, deleteOrder } from './reducers/orderReducer'
+import { initOrders } from './reducers/orderReducer'
 
 
 const App = () => {
@@ -50,7 +50,6 @@ const App = () => {
     }
   }, [])
 
-
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -78,20 +77,6 @@ const App = () => {
     setUser(null)
   }
 
-  const removeOrder = (id) => {
-    const order = orders.find(order => order.id === id)
-    if (window.confirm(`Removing order from ${order.customer.name}`)) {
-      dispatch(deleteOrder(id))
-        .catch(() => {
-          setError(true)
-          dispatch(newNotification(`Order ${order.id} from ${order.customer.name} was already deleted from server`, 5))
-        })
-      setError(false)
-      dispatch(newNotification(`Deleted order ${order.id} from ${order.customer.name}`, 5))
-    }
-    history.push("/orders")
-  }
-
   const matchOrder = useRouteMatch('/orders/:id')
   const order = matchOrder 
     ? orders.find(order => order.id === matchOrder.params.id)
@@ -111,18 +96,18 @@ const App = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#" as="span">
-              {user ? <Link to="/">home</Link> : null}
+              {user ? <Link to="/">Home</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
-              {user ? <Link to="/orders">orders</Link> : null}
+              {user ? <Link to="/orders">Orders</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
-              {user ? <Link to="/customers">customers</Link> : null}
+              {user ? <Link to="/customers">Customers</Link> : null}
             </Nav.Link>
             <Nav.Link href="#" as="span">
               {user
-                ? <em>{user.name} logged in 
-                <button onClick={handleLogout}>logout</button></em>
+                ? <em>{user.name} logged in {' '}
+                <Button variant='outline-secondary' onClick={handleLogout}><em>logout</em></Button></em>
                 : <Link to="/login"></Link>
               }
           </Nav.Link>
@@ -134,7 +119,6 @@ const App = () => {
         <Route path="/orders/:id">
           <Order 
             order={order}
-            removeOrder={removeOrder}
             />
         </Route>
         <Route path="/orders">

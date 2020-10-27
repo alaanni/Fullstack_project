@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
 import { initOrderLines } from '../reducers/orderLineReducer'
+import { Button } from 'react-bootstrap'
 
 const OrderForm = ({ 
   createOrder, 
@@ -44,11 +45,11 @@ const OrderForm = ({
 
   return(
     <div className='formDiv'>
-      <h2>new order</h2>
+      <h2>New order</h2>
 
       <form onSubmit={addOrder}>
         <div>
-          customer:
+          Select customer
           <Select 
               value={customerName} 
               onChange={(selectedName) => setCustomerName(selectedName)}
@@ -56,22 +57,22 @@ const OrderForm = ({
             />
         </div>
         <div>
-          product:
+          Select building
           <Select 
               value={ordersProduct} 
               onChange={(selectedType) => setOrdersProduct(selectedType)}
               options={ordertypes}         
             />
         </div>
-        <div>comment:</div>
+        <div>Comment</div>
         <div>
           <input
-            id='comment'
+            style={{width: "690px", height: "100px"}}
             value={comment}
             onChange={({ target }) => setComment(target.value)}
           />
         </div>
-        <button className='create-button' type="submit">add new order</button>
+        <Button variant='primary' className='create-button' type="submit">add new order</Button>
       </form>
     </div>
   )

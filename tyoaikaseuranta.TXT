@@ -10,4 +10,7 @@
 28.8.2020 Routejen korjailua 2 h
 30.9.2020 Hienosäätöä 1 h
 23.10.2020 Lisätty orderline komponentti backendiin 4 h
+23.10.2020 Frontendin toimivuutta paranneltu 2h
 23.10.2020 Luotu pohjat kartta ja kalenteri komponenteille 1 h
+27.10.2020 Building ja orderline komponenttien luonti ja käyttöönotto,
+		   kartta etusivulle ja koodin siistimistä 9 h

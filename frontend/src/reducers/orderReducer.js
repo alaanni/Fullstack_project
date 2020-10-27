@@ -1,4 +1,4 @@
-import orderService from '../services/orders'
+import orderService from '../services/orderService'
 
 const reducer = (state = [], action) => {
 

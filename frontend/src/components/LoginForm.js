@@ -9,22 +9,22 @@ const LoginForm = ({
 }) => {
   return (
     <div>
-    <h2>login</h2>
+    <h2>Login</h2>
     <Form onSubmit={handleLogin}>
       <Form.Group>
-        <Form.Label>username:</Form.Label>
+        <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
           name="username"
           onChange={({ target }) => setUsername(target.value)}
         />
-        <Form.Label>password:</Form.Label>
+        <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
           onChange={({ target }) => setPassword(target.value)}
         />
         <Button variant="primary" type="submit">
-          login
+          Login
         </Button>
       </Form.Group>
     </Form>

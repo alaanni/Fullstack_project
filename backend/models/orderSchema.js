@@ -2,8 +2,13 @@ const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
     customer: {
+      required: true,
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Customer'
+    },
+    building: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Building'
     },
     orderLine: {
       type: mongoose.Schema.Types.ObjectId,

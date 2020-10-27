@@ -33,50 +33,50 @@ const CustomerForm = ({
 
   return (
     <div>
-    <h2>new customer</h2>
+    <h2>New customer</h2>
     <Form onSubmit={addCustomer}>
       <Form.Group>
-        <Form.Label>name:</Form.Label>
+        <Form.Label>Name</Form.Label>
         <Form.Control
           type="text"
           name="name"
           onChange={({ target }) => setName(target.value)}
         />
-        <Form.Label>phone:</Form.Label>
+        <Form.Label>Phone</Form.Label>
         <Form.Control
           type="phone"
           onChange={({ target }) => setPhone(parseInt(target.value))}
         />
-        <Form.Label>email:</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
           onChange={({ target }) => setEmail(target.value)}
         />
-        <Form.Label>street:</Form.Label>
+        <Form.Label>Street</Form.Label>
         <Form.Control
           type="text"
           name="street"
           onChange={({ target }) => setStreet(target.value)}
         />
-        <Form.Label>city:</Form.Label>
+        <Form.Label>City</Form.Label>
         <Form.Control
           type="text"
           name="city"
           onChange={({ target }) => setCity(target.value)}
         />
-        <Form.Label>postal code:</Form.Label>
+        <Form.Label>Postal code</Form.Label>
         <Form.Control
           type="postalCode"
           onChange={({ target }) => setPostalCode(parseInt(target.value))}
         />
-        <Form.Label>add comment:</Form.Label>
+        <Form.Label>Add comment</Form.Label>
         <Form.Control
           type="text"
           name="comment"
           onChange={({ target }) => setComment(target.value)}
         />
         <Button variant="primary" type="submit">
-          add new customer
+          Add new customer
         </Button>
       </Form.Group>
     </Form>

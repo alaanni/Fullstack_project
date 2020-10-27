@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import OrderForm from './OrderForm'
 import { newNotification } from '../reducers/notificationReducer'
@@ -26,8 +26,8 @@ const OrderList = ({
     return (
     <div>
         {page === '' ? 
-        <button onClick={() => setPage('new order')}>add new order</button>
-        : <button onClick={() => setPage('')}>cancel</button>
+        <Button variant='primary' onClick={() => setPage('new order')}>Add new order</Button>
+        : <Button variant='secondary' onClick={() => setPage('')}>cancel</Button>
         }
         <OrderForm 
             show={page === 'new order'}
@@ -35,7 +35,7 @@ const OrderList = ({
             user={user}
         />
         
-        <h2>orders</h2>
+        <h2>Orders</h2>
         <Table striped>
         <tbody>
             {orders.map(order =>

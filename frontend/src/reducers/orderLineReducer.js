@@ -1,10 +1,7 @@
 import orderLineService from '../services/orderLineService'
 
 const reducer = (state = [], action) => {
-
-  console.log('state now: ', state)
-  console.log('action', action)
-
+  
   switch(action.type) {
     case 'INIT_ORDERLINES':
       return action.data

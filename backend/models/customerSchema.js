@@ -9,10 +9,22 @@ const customerSchema = new mongoose.Schema({
         type: Number,
         required: true
       },
-    email: String,
-    street: String,
-    city: String,
-    postalCode: Number,
+    email: {
+      type: String,
+      required: true
+    },
+    street: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    postalCode: {
+      type: Number,
+      required: true
+    },
     comment: String,
     orders: [
       {
@@ -20,6 +32,12 @@ const customerSchema = new mongoose.Schema({
         ref: 'Order'
       }
     ],
+    buildings: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Building'
+      }
+    ]
   })
 
   customerSchema.set('toJSON', {
