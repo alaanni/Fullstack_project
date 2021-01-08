@@ -6,13 +6,15 @@ import notificationReducer from './reducers/notificationReducer'
 import orderReducer from './reducers/orderReducer'
 import orderLineReducer from './reducers/orderLineReducer'
 import buildingReducer from './reducers/buildingReducer'
+import productReducer from './reducers/productReducer'
 
 const reducer = combineReducers({
     customers: customerReducer,
     orders: orderReducer,
     orderLines: orderLineReducer,
     notification: notificationReducer,
-    buildings: buildingReducer
+    buildings: buildingReducer,
+    products: productReducer
 })
 
 const store = createStore(

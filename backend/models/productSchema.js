@@ -1,13 +1,9 @@
 const mongoose = require('mongoose')
 
-const orderLineSchema = new mongoose.Schema({
-    order: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order'
-    },
+const productSchema = new mongoose.Schema({
     product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product'
+        type: String,
+        required: true
     },
     quantity: {
         type: Number
@@ -27,7 +23,7 @@ const orderLineSchema = new mongoose.Schema({
     description: String
   })
 
-  orderLineSchema.set('toJSON', {
+  productSchema.set('toJSON', {
     transform: (document, returnedObject) => {
       returnedObject.id = returnedObject._id.toString()
       delete returnedObject._id
@@ -35,4 +31,4 @@ const orderLineSchema = new mongoose.Schema({
     }
   })
   
-module.exports = mongoose.model('OrderLine', orderLineSchema)
+module.exports = mongoose.model('Product', productSchema)

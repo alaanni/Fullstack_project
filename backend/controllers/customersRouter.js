@@ -5,8 +5,8 @@ const User = require('../models/userSchema')
 
 customersRouter.get('/', async (request, response) => {
   const customers = await Customer.find({})
-  .populate('orders', { orderLine: 1 })
-  .populate('buildings', { type: 1})
+  .populate('orders', { id: 1 })
+  .populate('buildings', { id: 1})
   response.json(customers.map(customer => customer.toJSON()))
   })
   
@@ -65,9 +65,7 @@ customersRouter.delete('/:id', async(request, response) => {
    const user = await User.findById(decodedToken.id)
    const customer = await Customer.findById(request.params.id)
 
-   if ( order.user.toString() === user._id.toString() ) {   }
-    
-   await Order.findByIdAndRemove(request.params.id)
+   await Customer.findByIdAndRemove(request.params.id)
    response.status(204).end()
 
   response.status(401).end()

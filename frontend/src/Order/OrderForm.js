@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { useSelector, useDispatch } from 'react-redux'
-import { initOrderLines } from '../reducers/orderLineReducer'
+import { initBuildings } from '../reducers/buildingReducer'
 import { Button } from 'react-bootstrap'
 
 const OrderForm = ({ 
@@ -14,12 +14,12 @@ const OrderForm = ({
 
   const [customerName, setCustomerName] = useState('')
   const [comment, setComment] = useState('')
-  const [ordersProduct, setOrdersProduct] = useState('')
+  const [ordersBuilding, setOrdersBuilding] = useState('')
   const customers = useSelector(state => state.customers)
-  const orderLines = useSelector(state => state.orderLines)
+  const buildings = useSelector(state => state.buildings)
 
   useEffect(() => {
-    dispatch(initOrderLines())
+    dispatch(initBuildings())
   }, [dispatch])
 
   if (!show) {
@@ -28,18 +28,18 @@ const OrderForm = ({
 
   const names = customers.map(c => { return { value: c.name, label: c.name } })
 
-  const ordertypes = orderLines.map(t => { return { value: t.product, label: t.product } })
+  const selectBuildings = buildings.map(b => { return { value: b.type, label: b.type } })
 
   const addOrder = (event) => {
     event.preventDefault()
     createOrder({
       customer: customerName,
-      orderLine : ordersProduct,
+      building : ordersBuilding,
       user: user,
       comment: comment
     })
     setCustomerName('')
-    setOrdersProduct('')
+    setOrdersBuilding('')
     setComment('')
   }
 
@@ -59,9 +59,9 @@ const OrderForm = ({
         <div>
           Select building
           <Select 
-              value={ordersProduct} 
-              onChange={(selectedType) => setOrdersProduct(selectedType)}
-              options={ordertypes}         
+              value={ordersBuilding} 
+              onChange={(selectedType) => setOrdersBuilding(selectedType)}
+              options={selectBuildings}         
             />
         </div>
         <div>Comment</div>

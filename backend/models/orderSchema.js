@@ -10,10 +10,12 @@ const orderSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Building'
     },
-    orderLine: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'OrderLine'
-    },
+    orderLines: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'OrderLine'
+      }
+    ],
     status: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Status'

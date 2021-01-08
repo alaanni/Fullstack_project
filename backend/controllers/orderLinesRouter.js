@@ -1,5 +1,7 @@
 const orderLinesRouter = require('express').Router()
 const OrderLine = require('../models/orderLineSchema')
+const Order = require('../models/orderSchema')
+const Product = require('../models/productSchema')
 
 orderLinesRouter.get('/', async (request, response) => {
   const orderLines = await OrderLine
@@ -17,9 +19,14 @@ orderLinesRouter.get('/:id', async (request, response) => {
 })
 
 orderLinesRouter.post('/', async (request, response) => {
+  console.log(request.body.order.id)
   const body = request.body
+  const order = await Order.findById(body.order.id)
+  const product = await Product.findOne({  product: body.product.value })
+
   const orderLine = new OrderLine({
-    product: body.product,
+    order: order,
+    product: product,
     quantity: body.quantity,
     priceExclTax: body.priceExclTax,
     priceInclTax: body.priceInclTax,
@@ -28,8 +35,11 @@ orderLinesRouter.post('/', async (request, response) => {
     description: body.description
   })
 
+
   const savedOrderLine = await orderLine.save()
-  await orderLine.save()
+  order.orderLines = order.orderLines.concat(savedOrderLine);
+  await order.save()
+
   response.json(savedOrderLine.toJSON())
 })
 

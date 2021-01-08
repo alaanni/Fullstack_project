@@ -3,15 +3,15 @@ const ordersRouter = require('express').Router()
 const Order = require('../models/orderSchema')
 const User = require('../models/userSchema')
 const Customer = require('../models/customerSchema')
-const OrderLine = require('../models/orderLineSchema')
+const Building = require('../models/buildingSchema')
 
 ordersRouter.get('/', async (request, response) => {
   const orders = await Order
   .find({})
   .populate('user', { username: 1, name: 1 })
   .populate('customer', { name: 1 })
-  .populate('orderLine', { product: 1 })
   .populate('building', { type: 1 })
+  .populate('orderLine', { product: 1, quantity: 1, priceExclTax: 1})
   response.json(orders.map(order => order.toJSON()))
   })
   
@@ -33,12 +33,12 @@ ordersRouter.post('/', async (request, response) => {
   }
    const user = await User.findById(decodedToken.id)
    const ordersCustomer = await Customer.findOne({ name: body.customer.value })
-   const ordersProduct = await OrderLine.findOne({ product: body.orderLine.value})
+   const ordersBuilding = await Building.findOne({ type: body.building.value})
 
   const order = new Order({
     user: user,
     customer: ordersCustomer,
-    orderLine: ordersProduct,
+    building: ordersBuilding,
     comment: body.comment
   })
 
@@ -46,7 +46,8 @@ ordersRouter.post('/', async (request, response) => {
   user.orders = user.orders.concat(savedOrder.id)
   ordersCustomer.orders = ordersCustomer.orders.concat(savedOrder.id)
 
-  await ordersCustomer.save()
+  await ordersCustomer.save();
+  await user.save;
 
   response.json(savedOrder.toJSON())
 })

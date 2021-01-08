@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteOrder } from '../reducers/orderReducer'
 import { newNotification } from '../reducers/notificationReducer'
 import OrderLineForm from './OrderLineForm'
-import OrderLine from './OrderLineList'
 import OrderLineList from './OrderLineList'
 
 const Order = ({ order }) => {
@@ -34,19 +33,21 @@ const Order = ({ order }) => {
     history.push("/orders")
   }
 
-
+  if (!order) {
+    return null
+  }
 
   return (
     <div className='order'>
       <h2>Order information</h2>
       <div>
-        <p>order type: {order.orderLine.product}</p>
+        <p>order type: {order.building.type}</p>
         <p>customer: {order.customer.name}</p>
         <p>comments: {order.comment}</p>
       </div>
-      <OrderLineList />
+      <OrderLineList order={order}/>
       <br></br>
-      <OrderLineForm show={page === 'new orderline'}/>
+      <OrderLineForm show={page === 'new orderline'} order={order}/>
       <br></br>
       {page === '' ? 
         <Button variant='primary' onClick={() => setPage('new orderline')}>Add new orderline</Button>

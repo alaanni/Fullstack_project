@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { Table, Button } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { initOrderLines } from '../reducers/orderLineReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
-const OrderLineList = () => {
+const OrderLineList = ({ order }) => {
     const orderlines = useSelector(state => state.orderLines)
     const dispatch = useDispatch()
 
@@ -11,6 +11,7 @@ const OrderLineList = () => {
         dispatch(initOrderLines())
       }, [dispatch])
 
+    if(!orderlines) return null
     return (
     <div>
         <h2>Orderlines</h2>
@@ -38,4 +39,4 @@ const OrderLineList = () => {
     )
 }
 
-export default OrderLineList
+export default OrderLineList 

@@ -14,3 +14,5 @@
 23.10.2020 Luotu pohjat kartta ja kalenteri komponenteille 1 h
 27.10.2020 Building ja orderline komponenttien luonti ja käyttöönotto,
 		   kartta etusivulle ja koodin siistimistä 9 h
+7.1.2021 Aloitettu tilausrivien teko 2 h
+8.1.2021 Tilausrivien lisäyksen toteutusta 6 h
