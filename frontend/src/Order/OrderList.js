@@ -2,27 +2,21 @@ import React, { useState } from 'react'
 import { Table, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import OrderForm from './OrderForm'
-import { newNotification } from '../reducers/notificationReducer'
 import { createOrder } from '../reducers/orderReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-const OrderList = ({ 
-    user 
-    }) => {
+const OrderList = ({ user }) => {
     const [page, setPage] = useState('')
     const orders = useSelector(state => state.orders)
-
     const dispatch = useDispatch()
     const history = useHistory()
 
     const addOrder = (orderObject) => {
         dispatch(createOrder(orderObject))
-        dispatch(newNotification(`Added new order`, 5))
         setPage('')
         history.push("/orders")
     }
-    
     return (
     <div>
         {page === '' ? 
@@ -34,7 +28,6 @@ const OrderList = ({
             createOrder={addOrder} 
             user={user}
         />
-        
         <h2>Orders</h2>
         <Table striped>
         <tbody>
@@ -42,7 +35,7 @@ const OrderList = ({
             <tr key={order.id}>
                 <td>
                     <Link to={`/orders/${order.id}`}>
-                    {order.building.type}
+                    {order.id}
                     </Link>
                 </td>
                 <td>

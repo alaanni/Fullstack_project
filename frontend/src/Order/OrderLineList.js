@@ -15,7 +15,7 @@ const OrderLineList = ({ order }) => {
     return (
     <div>
         <h2>Orderlines</h2>
-        <Table striped>
+        <Table>
         <tbody>
             {orderlines.map(orderline =>
             <tr key={orderline.id}>

@@ -12,7 +12,7 @@ const OrderForm = ({
 
   const dispatch = useDispatch()
 
-  const [customerName, setCustomerName] = useState('')
+  const [customerId, setCustomerId] = useState('')
   const [comment, setComment] = useState('')
   const [ordersBuilding, setOrdersBuilding] = useState('')
   const customers = useSelector(state => state.customers)
@@ -26,19 +26,18 @@ const OrderForm = ({
     return null
   }
 
-  const names = customers.map(c => { return { value: c.name, label: c.name } })
-
-  const selectBuildings = buildings.map(b => { return { value: b.type, label: b.type } })
+  const names = customers.map(c => { return { value: c.id, label: c.name } })
+  const selectBuilding = buildings.map(b => { return { value: b, label: b.type} })
 
   const addOrder = (event) => {
     event.preventDefault()
     createOrder({
-      customer: customerName,
-      building : ordersBuilding,
+      customer: customerId.value,
+      building : ordersBuilding.value.id,
       user: user,
       comment: comment
     })
-    setCustomerName('')
+    setCustomerId('')
     setOrdersBuilding('')
     setComment('')
   }
@@ -51,17 +50,18 @@ const OrderForm = ({
         <div>
           Select customer
           <Select 
-              value={customerName} 
-              onChange={(selectedName) => setCustomerName(selectedName)}
+              value={customerId} 
+              onChange={(selectedId) => setCustomerId(selectedId)}
               options={names}         
             />
         </div>
+        {}
         <div>
           Select building
           <Select 
               value={ordersBuilding} 
               onChange={(selectedType) => setOrdersBuilding(selectedType)}
-              options={selectBuildings}         
+              options={selectBuilding.filter(b => b.value.customer === customerId.value)}        
             />
         </div>
         <div>Comment</div>

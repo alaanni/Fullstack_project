@@ -6,7 +6,7 @@ const User = require('../models/userSchema')
 customersRouter.get('/', async (request, response) => {
   const customers = await Customer.find({})
   .populate('orders', { id: 1 })
-  .populate('buildings', { id: 1})
+  .populate('buildings', { id: 1, type: 1})
   response.json(customers.map(customer => customer.toJSON()))
   })
   

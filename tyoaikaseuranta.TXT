@@ -16,3 +16,6 @@
 		   kartta etusivulle ja koodin siistimistä 9 h
 7.1.2021 Aloitettu tilausrivien teko 2 h
 8.1.2021 Tilausrivien lisäyksen toteutusta 6 h
+6.3.2021 Building lisäys toimivaksi, korjattu bugeja, päivitetty tilauksen ja asiakkaan lisäys toimivaksi 8 h
+
+Yhteensä 55 h

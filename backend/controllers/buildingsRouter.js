@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const buildingsRouter = require('express').Router()
 const Building = require('../models/buildingSchema')
+const Customer = require('../models/customerSchema')
 const User = require('../models/userSchema')
 
 buildingsRouter.get('/', async (request, response) => {
@@ -25,16 +26,19 @@ buildingsRouter.post('/', async (request, response) => {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = await User.findById(decodedToken.id) */
+  const buildingOwner = await Customer.findById(body.customer)
 
   const building = new Building({
+      customer: buildingOwner,
       type: body.type,
       street: body.street,
       city: body.city,
       postalCode: body.postalCode,
       comment: body.comment
   })
-
   const savedBuilding = await building.save()
+  buildingOwner.buildings = buildingOwner.buildings.concat(savedBuilding.id)
+  await buildingOwner.save();
 
   response.json(savedBuilding.toJSON())
 })

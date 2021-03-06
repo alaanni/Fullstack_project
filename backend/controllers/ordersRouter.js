@@ -9,7 +9,7 @@ ordersRouter.get('/', async (request, response) => {
   const orders = await Order
   .find({})
   .populate('user', { username: 1, name: 1 })
-  .populate('customer', { name: 1 })
+  .populate('customer', { name: 1, id: 1 })
   .populate('building', { type: 1 })
   .populate('orderLine', { product: 1, quantity: 1, priceExclTax: 1})
   response.json(orders.map(order => order.toJSON()))
@@ -25,6 +25,7 @@ ordersRouter.get('/:id', async (request, response) => {
 })
 
 ordersRouter.post('/', async (request, response) => {
+  console.log("request: ",request.body)
   const body = request.body
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -32,8 +33,8 @@ ordersRouter.post('/', async (request, response) => {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
    const user = await User.findById(decodedToken.id)
-   const ordersCustomer = await Customer.findOne({ name: body.customer.value })
-   const ordersBuilding = await Building.findOne({ type: body.building.value})
+   const ordersCustomer = await Customer.findById(body.customer)
+   const ordersBuilding = await Building.findById(body.building)
 
   const order = new Order({
     user: user,

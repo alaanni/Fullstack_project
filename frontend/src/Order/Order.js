@@ -6,6 +6,7 @@ import { deleteOrder } from '../reducers/orderReducer'
 import { newNotification } from '../reducers/notificationReducer'
 import OrderLineForm from './OrderLineForm'
 import OrderLineList from './OrderLineList'
+import { Link } from 'react-router-dom'
 
 const Order = ({ order }) => {
   const orders = useSelector(state => state.orders)
@@ -28,7 +29,6 @@ const Order = ({ order }) => {
           dispatch(newNotification(`Order ${order.id} from ${order.customer.name} was already deleted from server`, 5))
         })
       setError(false)
-      dispatch(newNotification(`Deleted order ${order.id} from ${order.customer.name}`, 5))
     }
     history.push("/orders")
   }
@@ -41,9 +41,9 @@ const Order = ({ order }) => {
     <div className='order'>
       <h2>Order information</h2>
       <div>
-        <p>order type: {order.building.type}</p>
-        <p>customer: {order.customer.name}</p>
-        <p>comments: {order.comment}</p>
+        <p>Customer: <Link to={`/customers/${order.customer.id}`}>{order.customer.name}</Link></p>
+        <p>Building: <Link to={`/buildings/${order.building.id}`}>{order.building.type}</Link></p>
+        <p>Additional details: {order.comment}</p>
       </div>
       <OrderLineList order={order}/>
       <br></br>

@@ -9,7 +9,6 @@ import { newNotification } from '../reducers/notificationReducer'
 const CustomerList = () => {
     const [page, setPage] = useState('')
     const customers = useSelector(state => state.customers)
-
     const dispatch = useDispatch()
 
     const addCustomer = (customerObject) => {

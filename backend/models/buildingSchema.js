@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const buildingSchema = new mongoose.Schema({
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Customer'
+    },
     type: {
       type: String,
       required: true

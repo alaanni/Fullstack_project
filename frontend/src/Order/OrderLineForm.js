@@ -20,7 +20,6 @@ const OrderLineForm = ({ show, order }) => {
 
   const selectProducts = products.map(t => { return { value: t.product, label: t.product } })
 
-  console.log("order: ", order)
   const addOrderLine = (event) => {
     event.preventDefault()
     createLine({
@@ -32,7 +31,6 @@ const OrderLineForm = ({ show, order }) => {
 
   const createLine = (orderLineObject) => {
     dispatch(createOrderLine(orderLineObject))
-    //history.push("/orders")
 }
 
   return(

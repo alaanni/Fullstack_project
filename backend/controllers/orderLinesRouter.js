@@ -25,7 +25,7 @@ orderLinesRouter.post('/', async (request, response) => {
   const product = await Product.findOne({  product: body.product.value })
 
   const orderLine = new OrderLine({
-    order: order,
+    order: order.id,
     product: product,
     quantity: body.quantity,
     priceExclTax: body.priceExclTax,
