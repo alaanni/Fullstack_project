@@ -6,7 +6,8 @@ Sovelluskehitysharjoitus nuohousalan asiakkuudenhallintaan ja toiminnanohjauksee
 - Tarkastele asiakkaita
 - Tarkastele tilauksia
 - Lisää asiakas
-- Lisää tai poista tilaus
+- Lisää tai poista asikkaan tilaus
+- Lisää asiakkaalle rakennus
 
 # Sovellus käynnissä
 Heroku
@@ -14,3 +15,5 @@ Heroku
 # Käyttö
 - Testikäyttäjä: testi
 - Salasana: testi
+
+# Työaikakirjanpito
