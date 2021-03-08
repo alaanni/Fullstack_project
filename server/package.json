@@ -7,7 +7,11 @@
     "node": "12.18.2"
   },
   "scripts": {
-    "build": "cd ../react-ui/ && npm install && npm run build",
+    "build:ui": "rm -rf build && cd /../../Documents/Fullstack_project/react-ui && npm run build --prod && cp -r build /../../Documents/Fullstack_project/react-ui",
+    "deploy": "git push heroku main",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",    
+    "logs:prod": "heroku logs --tail",
+    "build": "cd ../../react-ui/ && npm install && npm run build",
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
