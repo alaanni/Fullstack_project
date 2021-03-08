@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "fullstack-project",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,10 +7,9 @@
     "node": "12.x"
   },
   "scripts": {
-    "start": "node server",
     "build": "cd react-ui/ && npm install && npm run build",
-    "startt": "cross-env NODE_ENV=production node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "start:test": "cross-env NODE_ENV=test node index.js"
