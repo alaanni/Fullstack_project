@@ -7,8 +7,9 @@
     "node": "12.x"
   },
   "scripts": {
+    "start": "cross-env NODE_ENV=production node ./server/index.js",
     "build": "cd react-ui/ && npm install && npm run build",
-    "start": "cross-env NODE_ENV=production node index.js",
+    "startt": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
