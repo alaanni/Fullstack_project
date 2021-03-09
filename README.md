@@ -19,7 +19,7 @@ https://chimney-server.herokuapp.com/
   - npm install : instal dependencies
   - npm start : run the app 
   - npm run dev : run the server in development mode
-  - npm build : builds the app for production
+  - npm build : build the app for production
 
 # Working time tracking
 [Time tracking](tyoaikaseuranta.md)
