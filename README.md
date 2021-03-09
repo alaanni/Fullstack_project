@@ -29,3 +29,4 @@ https://chimney-server.herokuapp.com/
 - Kalenteri
 - Tilausajankohdan tallennus
 - Tilausten järjestäminen ajankohdan ja kohteiden sijaintien mukaan
+- Bugien korjausta
