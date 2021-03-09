@@ -1,19 +1,31 @@
 # Fullstack_project
-Sovelluskehitysharjoitus nuohousalan asiakkuudenhallintaan ja toiminnanohjaukseen
+Sovelluskehitysharjoitus asiakkuksien ja työkohteiden hallintaan.
 
 # Toiminnot
 - Kirjautuminen
 - Tarkastele asiakkaita
 - Tarkastele tilauksia
 - Lisää asiakas
-- Lisää tai poista asikkaan tilaus
-- Lisää asiakkaalle rakennus
+- Lisää tai poista asiakkaan tilaus
+- Lisää asiakkaalle rakennuksia
 
 # Sovellus käynnissä
-Heroku
+https://chimney-server.herokuapp.com/
 
-# Käyttö
+# Käyttöohjeet
 - Testikäyttäjä: testi
 - Salasana: testi
 
 # Työaikakirjanpito
+[Tyoaikaseuranta](Documents/tyoaikaseuranta.TXT)
+
+# Keskeneräiset toiminnot / Jatkokehitysideoita
+- Testaus
+- Laskutustoiminto
+- Tietojen muokkausmahdollisuus frontend:iin
+- Backend:in tietoturvallisuus
+- Ulkoasu
+- Kohteiden merkintä etusivun GoogleMaps:iin
+- Kalenteri
+- Tilausajankohdan tallennus
+- Tilausten järjestäminen ajankohdan ja kohteiden sijaintien mukaan
