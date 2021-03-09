@@ -1,32 +1,36 @@
 # Fullstack_project
-Sovelluskehitysharjoitus asiakkuksien ja työkohteiden hallintaan.
+Application development exercise for customer and work site management.
 
-# Toiminnot
-- Kirjautuminen
-- Tarkastele asiakkaita
-- Tarkastele tilauksia
-- Lisää asiakas
-- Lisää tai poista asiakkaan tilaus
-- Lisää asiakkaalle rakennuksia
+# Features
+- Login
+- View customers
+- View orders
+- Add a customer
+- Add or delete a customer's order
+- Add buildings to the customer
 
-# Sovellus käynnissä
+# Running 
 https://chimney-server.herokuapp.com/
 
-# Käyttöohjeet
-- Testikäyttäjä: testi
-- Salasana: testi
+# Instructions for use
+- Test user: testi
+- Test password: testi
+- Locally:
+  - npm install : instal dependencies
+  - npm start : run the app 
+  - npm run dev : run the server in development mode
+  - npm build : builds the app for production
 
-# Työaikakirjanpito
-[Työaikaseuranta](tyoaikaseuranta.md)
+# Working time tracking
+[Time tracking](tyoaikaseuranta.md)
 
-# Keskeneräiset toiminnot / Jatkokehitysideoita
-- Testaus
-- Laskutustoiminto
-- Tietojen muokkausmahdollisuus frontend:iin
-- Backend:in tietoturvallisuus
-- Ulkoasu
-- Kohteiden merkintä etusivun GoogleMaps:iin
-- Kalenteri
-- Tilausajankohdan tallennus
-- Tilausten järjestäminen ajankohdan ja kohteiden sijaintien mukaan
-- Bugien korjausta
+# Incomplete features / Further development ideas
+- Testing
+- Functionality for invoicing
+- Possibility to edit the data from frontend
+- Security checks to backend
+- Styles
+- Use of GoogleMaps on the home page
+- Calendar
+- Arranging orders by time and location of destinations
+- Bug fix
