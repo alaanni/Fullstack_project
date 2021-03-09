@@ -10,7 +10,7 @@ Application development exercise for customer and work site management.
 - Add buildings to the customer
 
 # Running 
-[Application running](https://chimney-server.herokuapp.com/)
+[Link to application](https://chimney-server.herokuapp.com/)
 
 # Instructions for use
 - Test user: testi
