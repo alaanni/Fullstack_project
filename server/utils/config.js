@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config({ path: require('find-config')('.env') })
 
 let PORT = process.env.PORT
 let MONGODB_URI = process.env.MONGODB_URI
