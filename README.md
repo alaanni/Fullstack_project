@@ -17,7 +17,7 @@ https://chimney-server.herokuapp.com/
 - Salasana: testi
 
 # Työaikakirjanpito
-[Tyoaikaseuranta](Documents/tyoaikaseuranta.TXT)
+[Tyoaikaseuranta](Fullstack_project/tyoaikaseuranta.md)
 
 # Keskeneräiset toiminnot / Jatkokehitysideoita
 - Testaus
